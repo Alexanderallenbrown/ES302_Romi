@@ -3,9 +3,6 @@ import matplotlib.pyplot as plt
 import time
 import keyboard
 
-
-
-
 #start a romi object on com 5
 romi = Romi(port='COM5')
 

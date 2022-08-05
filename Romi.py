@@ -18,7 +18,7 @@ class Romi:
         self.s1Pos = 0
         self.s2Pos = 0
         self.s3Pos = 0
-        self.prox = 0
+        self.proxFrontVal = 0
         self.Sim = sim
         self.goodReply = False
         self.datastring = ''
@@ -35,6 +35,20 @@ class Romi:
         self.simS1 = self.simromi.getDevice("s1")
         self.simS3 = self.simromi.getDevice("s3")
         self.simS2 = self.simromi.getDevice("s2")
+
+        self.simencoderRight = self.simromi.getDevice("encoder_right")
+        self.simencoderLeft = self.simromi.getDevice("encoder_left")
+        self.simS1FB = self.simromi.getDevice("s1fb")
+        self.simS2FB = self.simromi.getDevice("s2fb")
+        self.simS3FB = self.simromi.getDevice("s3fb")
+        self.proxFront = self.simromi.getDevice("proxFront")
+        tstep = int(self.simromi.getBasicTimeStep())
+        self.simencoderLeft.enable(tstep)
+        self.simencoderRight.enable(tstep)
+        self.simS1FB.enable(tstep)
+        self.simS2FB.enable(tstep)
+        self.simS3FB.enable(tstep)
+        self.proxFront.enable(tstep)
 
         self.simLeftMotor.setPosition(float('inf'))
         self.simRightMotor.setPosition(float('inf'))
@@ -74,8 +88,8 @@ class Romi:
 
     def updateSim(self):
         #convert motor speed commands to rad/s
-        wb_leftWheel = self.leftCommand*16.0/400
-        wb_rightWheel = self.rightCommand*16.0/400
+        wb_leftWheel = -self.leftCommand*16.0/400
+        wb_rightWheel = -self.rightCommand*16.0/400
         #convert servo commands to webots coordinates
         #servo commands at nominal: 90,0,68
         #servo feedback at nominal: 152, 303,111
@@ -91,7 +105,15 @@ class Romi:
         self.simS3.setPosition(wb_s3c)
         #now get feedback from servos
 
-        self.encRight = self.romi.simromi.getMotorPosition()*
+        self.encRight = self.simencoderRight.getValue()
+        self.encLeft = self.simencoderLeft.getValue()
+        self.s1Pos = self.simS1FB.getValue()
+        self.s2Pos = self.simS2FB.getValue()
+        self.s3Pos = self.simS3FB.getValue()
+
+        self.goodReply=True
+        self.datastring = str(self.encLeft)+","+str(self.encRight)+","+str(self.s1Pos)+","+str(self.s2Pos)+","+str(self.s3Pos)+","+str(self.proxFrontVal)+"\r\n"
+
 
     def updateHW(self):
         sendstr = "!"+format(self.leftCommand,'d')+","+format(self.rightCommand,'d')+","+format(self.s1Command,'d')+","+format(self.s2Command,'d')+","+format(self.s3Command,'d')+"\r\n"
