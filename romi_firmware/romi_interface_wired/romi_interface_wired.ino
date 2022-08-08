@@ -50,31 +50,17 @@ void loop() {
       m3Command = Serial.parseInt();
       //now send feedback
 
-//      if(Serial.read()=='\n'){
-        if(1){
-//        Serial.print("received: ");
-//        Serial.print(leftCommand);
-//        Serial.print(",");
-//        Serial.print(rightCommand);
-//        Serial.print(",");
-//        Serial.print(m1Command);
-//        Serial.print(",");
-//        Serial.print(m2Command);
-//        Serial.print(",");
-//        Serial.print(m3Command);
-//        Serial.print("\t");
-//        Serial.print("feedback: ");
         Serial.print(countsLeft);
         Serial.print(",");
         Serial.print(countsRight);
-        Serial.print(",");
-        Serial.print(proxVal);
         Serial.print(",");
         Serial.print(m1fb);
         Serial.print(",");
         Serial.print(m2fb);
         Serial.print(",");
         Serial.print(m3fb);
+        Serial.print(",");
+        Serial.print(proxVal);
         Serial.println();
       }
       
@@ -89,17 +75,5 @@ void loop() {
   }
   
   
-//  Serial.print(countsLeft);
-//  Serial.print(",");
-//  Serial.print(countsRight);
-//  Serial.print(",");
-//  Serial.print(proxVal);
-//  Serial.print(",");
-//  Serial.print(m1fb);
-//  Serial.print(",");
-//  Serial.print(m2fb);
-//  Serial.print(",");
-//  Serial.print(m3fb);
-//  Serial.println();
 
 }
