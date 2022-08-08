@@ -45,6 +45,7 @@ class Romi:
         self.motorVelocityLeft = 0
         self.motorVelocityRight = 0
 
+
         self.simS1FB = self.simromi.getDevice("s1fb")
         self.simS2FB = self.simromi.getDevice("s2fb")
         self.simS3FB = self.simromi.getDevice("s3fb")
@@ -104,7 +105,7 @@ class Romi:
         torque = self.kt/(self.R)*(Vcommand-self.kt*omega)
         #set motor force
         motor.setTorque(torque)
-        print(command,omega,torque)
+        #print(command,omega,torque)
 
     def updateSim(self):
         #get wheel speeds of romi
@@ -113,23 +114,12 @@ class Romi:
         self.motorVelocityRight = (self.simencoderRight.getValue()-self.motorPositionRight)/self.timestep
         self.motorPositionRight = self.simencoderRight.getValue()
 
-        #convert motor speed commands to rad/s
-        # wb_leftWheel = -self.leftCommand*16.0/400
-        # wb_rightWheel = -self.rightCommand*16.0/400
-        #convert servo commands to webots coordinates
-        #servo commands at nominal: 90,0,68
-        #servo feedback at nominal: 152, 303,111
-        #simulation nominal:  .53rad,0m, 1.2rad
-
-
         wb_s1c = .53+(self.s1Command-90)*3.1415/180
         wb_s2c = .017/180*self.s2Command
         wb_s3c = 1.2-(self.s3Command-68)*3.1415/180
         #now send to simulation
         self.setMotorTorque(self.simLeftMotor,-self.leftCommand,self.motorVelocityLeft)
         self.setMotorTorque(self.simRightMotor,-self.rightCommand,self.motorVelocityRight)
-        # self.simLeftMotor.setVelocity(wb_leftWheel)
-        # self.simRightMotor.setVelocity(wb_rightWheel)
         self.simS1.setPosition(wb_s1c)
         self.simS2.setPosition(wb_s2c)
         self.simS3.setPosition(wb_s3c)
@@ -137,9 +127,9 @@ class Romi:
 
         self.encRight = self.simencoderRight.getValue()
         self.encLeft = self.simencoderLeft.getValue()
-        self.s1Pos = self.simS1FB.getValue()
-        self.s2Pos = self.simS2FB.getValue()
-        self.s3Pos = self.simS3FB.getValue()
+        self.s1Pos = ((self.simS1FB.getValue()-.53)*180/3.14+90)*2.17+113 #convert to ADC counts
+        self.s2Pos = ((self.simS2FB.getValue())*180/.017)*17.5-1278
+        self.s3Pos = (((self.simS3FB.getValue()-1.2)*180/3.14+68)*2.18+115
 
         self.goodReply=True
         self.datastring = str(self.encLeft)+","+str(self.encRight)+","+str(self.s1Pos)+","+str(self.s2Pos)+","+str(self.s3Pos)+","+str(self.proxFrontVal)+"\r\n"

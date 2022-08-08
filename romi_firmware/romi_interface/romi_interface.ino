@@ -68,13 +68,13 @@ void loop() {
         Serial1.print(",");
         Serial1.print(countsRight);
         Serial1.print(",");
-        Serial1.print(proxVal);
-        Serial1.print(",");
         Serial1.print(m1fb);
         Serial1.print(",");
         Serial1.print(m2fb);
         Serial1.print(",");
         Serial1.print(m3fb);
+        Serial1.print(",");
+        Serial1.print(proxVal);
         Serial1.println();
       }
       
