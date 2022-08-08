@@ -30,14 +30,21 @@ class Romi:
     def initSim(self):
         from controller import Robot, Motor
         self.simromi = Robot()
+        self.timestep = self.simromi.getBasicTimeStep()
         self.simLeftMotor = self.simromi.getDevice('motor_left')
         self.simRightMotor = self.simromi.getDevice('motor_right')
         self.simS1 = self.simromi.getDevice("s1")
         self.simS3 = self.simromi.getDevice("s3")
-        self.simS2 = self.simromi.getDevice("s2")
+        self.simS2 = self.simromi.getDevice("s2::left")
 
+        self.encoder_conversion = float(120*12)/(3.141592654*2)
         self.simencoderRight = self.simromi.getDevice("encoder_right")
         self.simencoderLeft = self.simromi.getDevice("encoder_left")
+        self.motorPositionRight = 0
+        self.motorPositionLeft = 0
+        self.motorVelocityLeft = 0
+        self.motorVelocityRight = 0
+
         self.simS1FB = self.simromi.getDevice("s1fb")
         self.simS2FB = self.simromi.getDevice("s2fb")
         self.simS3FB = self.simromi.getDevice("s3fb")
@@ -52,6 +59,10 @@ class Romi:
 
         self.simLeftMotor.setPosition(float('inf'))
         self.simRightMotor.setPosition(float('inf'))
+
+        self.kt = .14#144 #Nm/A
+        self.R = 4 #Ohms
+        self.Vbatt = 5.5 #volts
 
 
     def initSerial(self):
@@ -84,22 +95,41 @@ class Romi:
         else:
             self.updateHW()
 
-
+    def setMotorTorque(self,motor,command,omega):
+        #get current motor velocity
+        #omega = motor.getVelocity() #THIS DOES NOT WORK!
+        #TODO constrain input counts
+        Vcommand = float(command)/400.0*self.Vbatt
+        #this uses a physics-based model to calculate torque based on motor params.
+        torque = self.kt/(self.R)*(Vcommand-self.kt*omega)
+        #set motor force
+        motor.setTorque(torque)
+        print(command,omega,torque)
 
     def updateSim(self):
+        #get wheel speeds of romi
+        self.motorVelocityLeft = (self.simencoderLeft.getValue()-self.motorPositionLeft)/self.timestep
+        self.motorPositionLeft = self.simencoderLeft.getValue()
+        self.motorVelocityRight = (self.simencoderRight.getValue()-self.motorPositionRight)/self.timestep
+        self.motorPositionRight = self.simencoderRight.getValue()
+
         #convert motor speed commands to rad/s
-        wb_leftWheel = -self.leftCommand*16.0/400
-        wb_rightWheel = -self.rightCommand*16.0/400
+        # wb_leftWheel = -self.leftCommand*16.0/400
+        # wb_rightWheel = -self.rightCommand*16.0/400
         #convert servo commands to webots coordinates
         #servo commands at nominal: 90,0,68
         #servo feedback at nominal: 152, 303,111
         #simulation nominal:  .53rad,0m, 1.2rad
+
+
         wb_s1c = .53+(self.s1Command-90)*3.1415/180
         wb_s2c = .017/180*self.s2Command
         wb_s3c = 1.2-(self.s3Command-68)*3.1415/180
         #now send to simulation
-        self.simLeftMotor.setVelocity(wb_leftWheel)
-        self.simRightMotor.setVelocity(wb_rightWheel)
+        self.setMotorTorque(self.simLeftMotor,-self.leftCommand,self.motorVelocityLeft)
+        self.setMotorTorque(self.simRightMotor,-self.rightCommand,self.motorVelocityRight)
+        # self.simLeftMotor.setVelocity(wb_leftWheel)
+        # self.simRightMotor.setVelocity(wb_rightWheel)
         self.simS1.setPosition(wb_s1c)
         self.simS2.setPosition(wb_s2c)
         self.simS3.setPosition(wb_s3c)
