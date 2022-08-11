@@ -1,0 +1,22 @@
+var searchData=
+[
+  ['s1command_0',['s1Command',['../class_romi_1_1_romi.html#a9f52717a841cf0a48ec61eb507d45363',1,'Romi::Romi']]],
+  ['s1pos_1',['s1Pos',['../class_romi_1_1_romi.html#a34b6c4a871d8737af13fee1651a41cb9',1,'Romi::Romi']]],
+  ['s2command_2',['s2Command',['../class_romi_1_1_romi.html#af05fcc3b23f35b3ccf712ec7d2c7826b',1,'Romi::Romi']]],
+  ['s2pos_3',['s2Pos',['../class_romi_1_1_romi.html#a55e645f3a043fcdb9f86467674bfadb9',1,'Romi::Romi']]],
+  ['s3command_4',['s3Command',['../class_romi_1_1_romi.html#a94025c88a7ef21df2a126b4fa0bb1d8d',1,'Romi::Romi']]],
+  ['s3pos_5',['s3Pos',['../class_romi_1_1_romi.html#a48ffc4c0a0d375501db0be0640d11302',1,'Romi::Romi']]],
+  ['ser_6',['ser',['../class_romi_1_1_romi.html#a37aaba2704d0f22a6969f31ea99a18e9',1,'Romi::Romi']]],
+  ['sim_7',['Sim',['../class_romi_1_1_romi.html#a0226dfb23554f2b83ae097b5ce613752',1,'Romi::Romi']]],
+  ['simencoderleft_8',['simencoderLeft',['../class_romi_1_1_romi.html#a99e2077ab5dbaca877aec4e00fb50626',1,'Romi::Romi']]],
+  ['simencoderright_9',['simencoderRight',['../class_romi_1_1_romi.html#ae19c5e0df64c3358409a0efbd01d040d',1,'Romi::Romi']]],
+  ['simleftmotor_10',['simLeftMotor',['../class_romi_1_1_romi.html#aecf636d9a308116bc23d1f2b9ecc32f3',1,'Romi::Romi']]],
+  ['simrightmotor_11',['simRightMotor',['../class_romi_1_1_romi.html#a0583c354188705c04e86a224ec976144',1,'Romi::Romi']]],
+  ['simromi_12',['simromi',['../class_romi_1_1_romi.html#a48334542ea8507c615c33026b54d8cf6',1,'Romi::Romi']]],
+  ['sims1_13',['simS1',['../class_romi_1_1_romi.html#a0375f5a1bcf476e983784490674b16b5',1,'Romi::Romi']]],
+  ['sims1fb_14',['simS1FB',['../class_romi_1_1_romi.html#a940d36399e3f661c26e9f2cb8e89115a',1,'Romi::Romi']]],
+  ['sims2_15',['simS2',['../class_romi_1_1_romi.html#a7267712fbc8655fe1371f4830c5ee693',1,'Romi::Romi']]],
+  ['sims2fb_16',['simS2FB',['../class_romi_1_1_romi.html#ac53ad4755c3f4c56c44fd633b90354be',1,'Romi::Romi']]],
+  ['sims3_17',['simS3',['../class_romi_1_1_romi.html#a6d9fbe24d84467752d4b8b7a7f06f5bb',1,'Romi::Romi']]],
+  ['sims3fb_18',['simS3FB',['../class_romi_1_1_romi.html#a0cb51762180226ef470893506ec9463c',1,'Romi::Romi']]]
+];

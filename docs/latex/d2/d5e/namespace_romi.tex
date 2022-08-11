@@ -1,0 +1,20 @@
+\hypertarget{namespace_romi}{}\doxysection{Romi Namespace Reference}
+\label{namespace_romi}\index{Romi@{Romi}}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_romi_1_1_romi}{Romi}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_romi_1_1_romi}{Romi}} robot object represents either a simulated robot or a real robot. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Library for interacting with the Lafayette ES302 Romi Robot. Library's primary class is the Romi class, which can be set up to control either a simulation of the Romi in Webots (requires Webots) or a real Romi robot that is connected through a serial port (hardware or bluetooth).
+
+The library depends on the pySerial library for interacting with a real robot, and it depends on Webot's Robot class for interacting with a simulated romi.
+
+The philosophy of the library is based on "call and response," so when the Romi'sgiven commands, it responds with the latest sensor readings. Using the Library requires uploading the Romi Arduino firmware to the robot before use. That firmware
+is included in the firmware/ folder, and includes a variant for wired communication (Serial) as well as a variant for bluetooth communication via Serial1.
+
+Written by Alexander Brown August 2022
+\end{DoxyVerb}
+ 
