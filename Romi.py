@@ -19,7 +19,7 @@ import time
 class Romi:
     """!Romi robot object represents either a simulated robot or a real robot. Default is a real robot; set sim=True to change"""
     def __init__(self,sim=False,port='COM5',baud=115200):
-        """!initializes romi.
+        """!initializes romi. All servo feedback and proximity sensor feedback variables are in ADC "counts" and range from 0-1023. Encoder values are integers and range from 0 to 2^32-1. Romi has 1440 encoder counts per wheel revolution.
         @param sim  Whether this robot is simulated or real (default False)
         @param port port to use when connecting to a real Romi (default 'COM5')
         @param baud baud rate too use when connecting to a real Romi (default 115200)
@@ -190,8 +190,8 @@ class Romi:
         self.simS3.setPosition(wb_s3c)
         #now get feedback from servos
 
-        self.encRight = self.simencoderRight.getValue()
-        self.encLeft = self.simencoderLeft.getValue()
+        self.encRight = -self.simencoderRight.getValue()*(12*120/2/3.14)
+        self.encLeft = self.simencoderLeft.getValue()*(12*120/2/3.14)
         self.s1Pos = ((self.simS1FB.getValue()-.53)*180/3.14+90)*2.17+113 #convert to ADC counts
         self.s2Pos = ((self.simS2FB.getValue())*180/.017)*17.5-1278
         self.s3Pos = ((self.simS3FB.getValue()-1.2)*180/3.14+68)*2.18+115

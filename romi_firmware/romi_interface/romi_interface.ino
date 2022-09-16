@@ -25,7 +25,10 @@ void setup() {
   m1.attach(5);
   m2.attach(12);
   m3.attach(22);
-
+  //declare LED pin as output (pin 13) for prox sensor
+  pinMode(13,OUTPUT);
+  //turn on headlight for prox sensor
+  digitalWrite(13,HIGH);
   //begin Serial1 communication
   Serial1.begin(115200);
 }
